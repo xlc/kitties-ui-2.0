@@ -3,10 +3,13 @@ import styled from 'styled-components';
 import BN from 'bn.js';
 import { withCalls } from '@polkadot/react-api/with';
 
-import { Kitty } from './types';
 import LoadKittyAvatar from './LoadKittyAvatar';
 
 const Wrapper = styled.section``;
+const KittiesWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`;
 
 type Props = {
   kitties_kittiesCount?: BN
@@ -28,7 +31,9 @@ class KittyViewer extends React.PureComponent<Props, State> {
         <h2>
           Total kitties count: {count}
         </h2>
+        <KittiesWrapper>
         { kitties }
+        </KittiesWrapper>
       </Wrapper>
     );
   }
