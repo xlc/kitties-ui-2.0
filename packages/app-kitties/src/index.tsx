@@ -18,6 +18,7 @@ import AccountSelector from './AccountSelector';
 import SummaryBar from './SummaryBar';
 import Transfer from './Transfer';
 import translate from './translate';
+import KittyAvatar from './KittyAvatar';
 
 import * as types from './types';
 
@@ -41,7 +42,7 @@ class App extends React.PureComponent<Props, State> {
       <main>
         <SummaryBar />
         <AccountSelector onChange={this.onAccountChange} />
-        <Transfer accountId={accountId} />
+        <KittyAvatar dna={[]} />
       </main>
     );
   }

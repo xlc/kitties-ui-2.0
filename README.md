@@ -67,3 +67,11 @@ To build a docker container containing local changes -
   docker build -t chevdor/polkadot-ui:latest .
 
 When using these Docker commands, you can access the UI via http://localhost:80 (or just http://localhost)
+
+----
+
+## Credits
+
+Cat avatar images sources : CC-By 4.0 attribution: David Revoy https://framagit.org/Deevad/cat-avatar-generator
+
+KittyAvatar from https://github.com/shawntabrizi/substrate-collectables-workshop/
