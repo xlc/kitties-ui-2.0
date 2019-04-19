@@ -15,6 +15,7 @@ import React from 'react';
 
 // local imports and components
 import AccountSelector from './AccountSelector';
+import KittyActions from './KittyActions';
 import translate from './translate';
 import KittyViewer from './KittyViewer';
 
@@ -39,6 +40,7 @@ class App extends React.PureComponent<Props, State> {
       // and margins inside the application. (Just from a consistent pov)
       <main>
         <AccountSelector onChange={this.onAccountChange} />
+        <KittyActions accountId={accountId} />
         <KittyViewer/>
       </main>
     );
