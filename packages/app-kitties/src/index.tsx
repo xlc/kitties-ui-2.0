@@ -18,11 +18,13 @@ import AccountSelector from './AccountSelector';
 import SummaryBar from './SummaryBar';
 import Transfer from './Transfer';
 import translate from './translate';
-import KittyAvatar from './KittyAvatar';
+import KittyViewer from './KittyViewer';
 
 import * as types from './types';
 
 getTypeRegistry().register(types);
+
+const Kitty = types.Kitty;
 
 // define out internal types
 type Props = AppProps & I18nProps;
@@ -36,13 +38,15 @@ class App extends React.PureComponent<Props, State> {
   public render (): React.ReactNode {
     const { accountId } = this.state;
 
+    const kitties = [ new Kitty(), new Kitty(11111), new Kitty(222222222) ];
+
     return (
       // in all apps, the main wrapper is setup to allow the padding
       // and margins inside the application. (Just from a consistent pov)
       <main>
         <SummaryBar />
         <AccountSelector onChange={this.onAccountChange} />
-        <KittyAvatar dna={[]} />
+        <KittyViewer kitties={kitties} />
       </main>
     );
   }
