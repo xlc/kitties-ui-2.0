@@ -4,27 +4,31 @@ import BN from 'bn.js';
 import { withCalls } from '@polkadot/react-api/with';
 
 import { Kitty } from './types';
-import KittyAvatar from './KittyAvatar';
+import LoadKittyAvatar from './LoadKittyAvatar';
 
 const Wrapper = styled.section``;
 
 type Props = {
-  kitties_kittiesCount: BN
+  kitties_kittiesCount?: BN
 };
 type State = {};
 
-class KittyViewer extends React.PureComponent<Props, State>{
+class KittyViewer extends React.PureComponent<Props, State> {
 
   render () {
-    const { kitties_kittiesCount: count } = this.props;
+    const { kitties_kittiesCount } = this.props;
+    const count = kitties_kittiesCount ? kitties_kittiesCount.toNumber() : 0;
+    const kitties = [];
+    for (let i = 0; i < count; ++i) {
+      kitties.push(<LoadKittyAvatar key={i} kittyId={new BN(i)} />);
+    }
     return (
       <Wrapper>
         <h1>Substrate Kitties</h1>
-        {/* { kitties.length === 0 && 'No kitties'}
-        { kitties.map(k => (
-          <KittyAvatar dna={k.dna} />
-        )) } */}
-        kitty count: {count && count.toString()}
+        <h2>
+          Total kitties count: {count}
+        </h2>
+        { kitties }
       </Wrapper>
     );
   }
