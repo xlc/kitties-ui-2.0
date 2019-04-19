@@ -15,8 +15,7 @@ import React from 'react';
 
 // local imports and components
 import AccountSelector from './AccountSelector';
-import SummaryBar from './SummaryBar';
-import Transfer from './Transfer';
+import KittyActions from './KittyActions';
 import translate from './translate';
 import KittyViewer from './KittyViewer';
 
@@ -40,8 +39,8 @@ class App extends React.PureComponent<Props, State> {
       // in all apps, the main wrapper is setup to allow the padding
       // and margins inside the application. (Just from a consistent pov)
       <main>
-        <SummaryBar />
         <AccountSelector onChange={this.onAccountChange} />
+        <KittyActions accountId={accountId} />
         <KittyViewer/>
       </main>
     );
