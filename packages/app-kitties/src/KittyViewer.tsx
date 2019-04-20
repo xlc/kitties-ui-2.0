@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import BN from 'bn.js';
 import { withCalls } from '@polkadot/react-api/with';
 
-import LoadKittyAvatar from './LoadKittyAvatar';
+import KittyCard from './KittyCard';
 
 const Wrapper = styled.section``;
 const KittiesWrapper = styled.div`
@@ -23,7 +23,7 @@ class KittyViewer extends React.PureComponent<Props, State> {
     const count = kitties_kittiesCount ? kitties_kittiesCount.toNumber() : 0;
     const kitties = [];
     for (let i = 0; i < count; ++i) {
-      kitties.push(<LoadKittyAvatar key={i} kittyId={new BN(i)} />);
+      kitties.push(<KittyCard key={i} kittyId={new BN(i)} />);
     }
     return (
       <Wrapper>
