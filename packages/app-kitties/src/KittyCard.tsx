@@ -1,12 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { AddressMini } from '@polkadot/react-components';
+import { AddressMini, TxButton } from '@polkadot/react-components';
 import { u8aToHex, formatBalance } from '@polkadot/util';
-import { Option } from '@polkadot/types';
-import { Balance } from '@polkadot/types/interfaces';
+import { createType } from '@polkadot/types';
 
 import KittyAvatar from './KittyAvatar';
-import withKitty, { Props } from './withKitty';
+import withKitty, { Props as WithKittyProps } from './withKitty';
 
 const Wrapper = styled.div`
   border: 2px solid #eee;
@@ -26,16 +25,33 @@ const Line = styled.div`
   margin: 10px -10px;
 `;
 
-const Price = ({ price }: { price?: Option<Balance> }) => {
+type Props = WithKittyProps & {
+  showUnlist?: boolean,
+  accountId?: string
+};
+
+const Price = ({ kittyId, price, showUnlist, accountId }: Props) => {
   if (price && price.isSome) {
     const value = price.unwrap();
-    return <label>Price: {formatBalance(value)}</label>;
+    return (
+      <>
+        <label>Price: {formatBalance(value)}</label>
+        {showUnlist &&
+          <TxButton
+            accountId={accountId}
+            label='Unlist'
+            params={[kittyId, createType('Option<Balance>', null)]}
+            tx='kitties.ask'
+          />
+        }
+      </>
+    );
   }
 
   return <label>Not for sale</label>;
 };
 
-const KittyCard = ({ kittyId, kitty, owner, price }: Props) => {
+const KittyCard = ({ kittyId, kitty, owner, price, showUnlist, accountId }: Props) => {
   if (kitty && kitty.isSome) {
     const dna = kitty.unwrap().dna;
     return (
@@ -50,11 +66,11 @@ const KittyCard = ({ kittyId, kitty, owner, price }: Props) => {
           />
         </label>
         <label>DNA: {u8aToHex(dna)}</label>
-        <Price price={price}/>
+        <Price {...{ kittyId, price, showUnlist, accountId }}/>
       </Wrapper>
     );
   }
   return <div>Loading...</div>;
 };
 
-export default withKitty(KittyCard);
+export default withKitty(KittyCard) as React.ComponentType<Props>;
