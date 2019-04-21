@@ -41,7 +41,7 @@ class App extends React.PureComponent<Props, State> {
       <main>
         <AccountSelector onChange={this.onAccountChange} />
         <KittyActions accountId={accountId} />
-        <KittyViewer/>
+        <KittyViewer accountId={accountId} />
       </main>
     );
   }
