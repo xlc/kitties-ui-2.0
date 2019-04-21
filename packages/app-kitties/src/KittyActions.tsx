@@ -4,7 +4,7 @@
 
 import React from 'react';
 import BN from 'bn.js';
-import { Button, TxButton, InputNumber } from '@polkadot/react-components';
+import { Button, TxButton, InputNumber, InputAddress } from '@polkadot/react-components';
 
 import { KittyIndex } from './types';
 
@@ -13,14 +13,13 @@ type Props = {
 };
 type State = {
   parentKittyId1?: KittyIndex,
-  parentKittyId2?: KittyIndex
+  parentKittyId2?: KittyIndex,
+  recipientId?: string,
+  transferKittyId?: KittyIndex
 };
 
 export default class KittyActions extends React.PureComponent<Props> {
-  state: State = {
-    parentKittyId1: undefined,
-    parentKittyId2: undefined
-  };
+  state: State = {};
 
   private onSetParentKittyId1 = (id?: BN) => {
     this.setState({
@@ -34,9 +33,17 @@ export default class KittyActions extends React.PureComponent<Props> {
     });
   }
 
+  private onSetRecipient = (recipientId?: string) => {
+    this.setState({ recipientId });
+  }
+
+  private onSetTransferKittyId = (transferKittyId?: BN) => {
+    this.setState({ transferKittyId: transferKittyId && new KittyIndex(transferKittyId) });
+  }
+
   render () {
     const { accountId } = this.props;
-    const { parentKittyId1, parentKittyId2 } = this.state;
+    const { parentKittyId1, parentKittyId2, recipientId, transferKittyId } = this.state;
 
     return (
       <section>
@@ -71,6 +78,27 @@ export default class KittyActions extends React.PureComponent<Props> {
                 label='Breed Kitty'
                 params={[parentKittyId1, parentKittyId2]}
                 tx='kitties.breed'
+              />
+            </Button.Group>
+          </div>
+        </div>
+        <h2>Transfer Kitty</h2>
+        <div className='ui--row'>
+          <div className='large'>
+            <InputAddress
+              label='recipient address'
+              onChange={this.onSetRecipient}
+            />
+            <InputNumber
+              label='Kitty ID to send'
+              onChange={this.onSetTransferKittyId}
+            />
+            <Button.Group>
+              <TxButton
+                accountId={accountId}
+                label='Transfer Kitty'
+                params={[recipientId, transferKittyId]}
+                tx='kitties.transfer'
               />
             </Button.Group>
           </div>
