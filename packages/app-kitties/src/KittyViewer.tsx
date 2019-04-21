@@ -21,7 +21,7 @@ const KittyViewer = ({ kittiesCount, accountId }: Props) => {
   const count = kittiesCount ? kittiesCount.toNumber() : 0;
   const kitties = [];
   for (let i = 0; i < count; ++i) {
-    kitties.push(<KittyCard key={i} kittyId={new BN(i)} />);
+    kitties.push(<KittyCard key={i} kittyId={new BN(i)} showBuy={true} accountId={accountId} />);
   }
   return (
     <Wrapper>

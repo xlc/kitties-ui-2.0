@@ -27,10 +27,11 @@ const Line = styled.div`
 
 type Props = WithKittyProps & {
   showUnlist?: boolean,
+  showBuy?: boolean,
   accountId?: string
 };
 
-const Price = ({ kittyId, price, showUnlist, accountId }: Props) => {
+const Price = ({ kittyId, price, showUnlist, showBuy, accountId }: Props) => {
   if (price && price.isSome) {
     const value = price.unwrap();
     return (
@@ -44,6 +45,14 @@ const Price = ({ kittyId, price, showUnlist, accountId }: Props) => {
             tx='kitties.ask'
           />
         }
+        {showBuy &&
+          <TxButton
+            accountId={accountId}
+            label='Buy'
+            params={[kittyId, value]}
+            tx='kitties.buy'
+          />
+        }
       </>
     );
   }
@@ -51,7 +60,7 @@ const Price = ({ kittyId, price, showUnlist, accountId }: Props) => {
   return <label>Not for sale</label>;
 };
 
-const KittyCard = ({ kittyId, kitty, owner, price, showUnlist, accountId }: Props) => {
+const KittyCard = ({ kittyId, kitty, owner, ...others }: Props) => {
   if (kitty && kitty.isSome) {
     const dna = kitty.unwrap().dna;
     return (
@@ -66,7 +75,7 @@ const KittyCard = ({ kittyId, kitty, owner, price, showUnlist, accountId }: Prop
           />
         </label>
         <label>DNA: {u8aToHex(dna)}</label>
-        <Price {...{ kittyId, price, showUnlist, accountId }}/>
+        <Price {...{ kittyId, ...others }}/>
       </Wrapper>
     );
   }
