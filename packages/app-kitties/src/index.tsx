@@ -7,6 +7,7 @@
 // `t` is inject into props (see the HOC export) and `t('any text')
 // does the translation
 import { AppProps, I18nProps } from '@polkadot/react-components/types';
+import { getTypeRegistry } from '@polkadot/types/codec/create/registry';
 
 // external imports (including those found in the packages/*
 // of this repo)
@@ -17,6 +18,10 @@ import AccountSelector from './AccountSelector';
 import SummaryBar from './SummaryBar';
 import Transfer from './Transfer';
 import translate from './translate';
+
+import * as types from './types';
+
+getTypeRegistry().register(types);
 
 // define out internal types
 type Props = AppProps & I18nProps;
