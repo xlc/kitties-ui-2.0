@@ -41,6 +41,7 @@ export default class KittyActions extends React.PureComponent<Props> {
     return (
       <section>
         <h1>Kitty Actions</h1>
+        <h2>Create Kitty</h2>
         <div className='ui--row'>
           <div className='large'>
             <Button.Group>
@@ -53,6 +54,7 @@ export default class KittyActions extends React.PureComponent<Props> {
             </Button.Group>
           </div>
         </div>
+        <h2>Breed Kitty</h2>
         <div className='ui--row'>
           <div className='large'>
             <InputNumber
