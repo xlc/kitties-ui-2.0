@@ -33,7 +33,7 @@ const LinkedKittyCardComp = ({ accountKey, item, onNextOwnedKittiesKey }: Linked
     }
   }
   if (accountKey.kittyId.isSome) {
-    return <KittyCard kittyId={accountKey.kittyId.unwrap()} />;
+    return <KittyCard kittyId={accountKey.kittyId.unwrap()} showUnlist={true} accountId={accountKey.account.toString()} />;
   }
   return null;
 };
