@@ -4,6 +4,7 @@ import BN from 'bn.js';
 import { withCalls } from '@polkadot/react-api/with';
 
 import KittyCard from './KittyCard';
+import OwnedKittyViewer from './OwnedKittyViewer';
 
 const Wrapper = styled.section``;
 const KittiesWrapper = styled.div`
@@ -12,10 +13,11 @@ const KittiesWrapper = styled.div`
 `;
 
 type Props = {
-  kittiesCount?: BN
+  kittiesCount?: BN,
+  accountId?: string
 };
 
-const KittyViewer = ({ kittiesCount }: Props) => {
+const KittyViewer = ({ kittiesCount, accountId }: Props) => {
   const count = kittiesCount ? kittiesCount.toNumber() : 0;
   const kitties = [];
   for (let i = 0; i < count; ++i) {
@@ -24,12 +26,15 @@ const KittyViewer = ({ kittiesCount }: Props) => {
   return (
     <Wrapper>
       <h1>Substrate Kitties</h1>
-      <h2>
-        Total kitties count: {count}
-      </h2>
-      <KittiesWrapper>
-      { kitties }
-      </KittiesWrapper>
+      <OwnedKittyViewer key={accountId} accountId={accountId} />
+      <div>
+        <h2>
+          Total kitties count: {count}
+        </h2>
+        <KittiesWrapper>
+        { kitties }
+        </KittiesWrapper>
+      </div>
     </Wrapper>
   );
 };
