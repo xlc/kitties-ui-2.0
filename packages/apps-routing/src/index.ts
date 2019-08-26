@@ -7,6 +7,7 @@ import { Routing, Routes } from './types';
 import appSettings from '@polkadot/ui-settings';
 
 import template from './123code';
+import kitties from './kitties';
 import accounts from './accounts';
 import addressbook from './addressbook';
 import claims from './claims';
@@ -36,6 +37,7 @@ const routes: Routes = appSettings.uiMode === 'light'
     claims,
     transfer,
     genericAsset,
+    kitties,
     null,
     staking,
     democracy,
@@ -52,6 +54,7 @@ const routes: Routes = appSettings.uiMode === 'light'
     claims,
     transfer,
     genericAsset,
+    kitties,
     null,
     staking,
     democracy,
@@ -71,7 +74,7 @@ const routes: Routes = appSettings.uiMode === 'light'
   );
 
 const setup: Routing = {
-  default: 'explorer',
+  default: 'kitties',
   routes
 };
 
