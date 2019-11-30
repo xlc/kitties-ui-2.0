@@ -13,8 +13,8 @@ const KittiesWrapper = styled.div`
 `;
 
 type Props = {
-  kittiesCount?: BN,
-  accountId?: string
+  kittiesCount?: BN;
+  accountId?: string;
 };
 
 const KittyViewer = ({ kittiesCount, accountId }: Props) => {
@@ -32,7 +32,7 @@ const KittyViewer = ({ kittiesCount, accountId }: Props) => {
           Total kitties count: {count}
         </h2>
         <KittiesWrapper>
-        { kitties }
+          { kitties }
         </KittiesWrapper>
       </div>
     </Wrapper>

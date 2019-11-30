@@ -5,10 +5,10 @@ import { withCalls } from '@polkadot/react-api/with';
 import { Kitty } from './types';
 
 export type Props = {
-  kittyId: BN,
-  kitty?: Option<Kitty>,
-  owner?: Option<AccountId>,
-  price?: Option<Balance>
+  kittyId: BN;
+  kitty?: Option<Kitty>;
+  owner?: Option<AccountId>;
+  price?: Option<Balance>;
 };
 
 export default withCalls<Props>(

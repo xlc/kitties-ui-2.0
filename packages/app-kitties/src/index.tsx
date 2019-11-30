@@ -7,11 +7,11 @@
 // `t` is inject into props (see the HOC export) and `t('any text')
 // does the translation
 import { AppProps, I18nProps } from '@polkadot/react-components/types';
-import { getTypeRegistry } from '@polkadot/types/codec/create/registry';
+import { registry } from '@polkadot/react-api';
 
 // external imports (including those found in the packages/*
 // of this repo)
-import React from 'react';
+import React, { useState } from 'react';
 
 // local imports and components
 import AccountSelector from './AccountSelector';
@@ -21,34 +21,23 @@ import KittyViewer from './KittyViewer';
 
 import * as types from './types';
 
-getTypeRegistry().register(types);
+registry.register(types);
 
 // define out internal types
-type Props = AppProps & I18nProps;
-interface State {
-  accountId?: string;
-}
+interface Props extends AppProps, I18nProps {}
 
-class App extends React.PureComponent<Props, State> {
-  public state: State = {};
+function App ({ className }: Props): React.ReactElement<Props> {
+  const [accountId, setAccountId] = useState<string | undefined>(undefined);
 
-  public render (): React.ReactNode {
-    const { accountId } = this.state;
-
-    return (
-      // in all apps, the main wrapper is setup to allow the padding
-      // and margins inside the application. (Just from a consistent pov)
-      <main>
-        <AccountSelector onChange={this.onAccountChange} />
-        <KittyActions accountId={accountId} />
-        <KittyViewer accountId={accountId} />
-      </main>
-    );
-  }
-
-  private onAccountChange = (accountId?: string): void => {
-    this.setState({ accountId });
-  }
+  return (
+    // in all apps, the main wrapper is setup to allow the padding
+    // and margins inside the application. (Just from a consistent pov)
+    <main className={className}>
+      <AccountSelector onChange={setAccountId} />
+      <KittyActions accountId={accountId} />
+      <KittyViewer accountId={accountId} />
+    </main>
+  );
 }
 
 export default translate(App);

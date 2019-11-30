@@ -1,5 +1,6 @@
-import { u32, u128, Struct, Option, ClassOf } from '@polkadot/types';
+import { u32, u128, Struct, Option, ClassOf, Tuple } from '@polkadot/types';
 import { AccountId } from '@polkadot/types/interfaces';
+import { Registry } from '@polkadot/types/types';
 
 export class Kitty extends u128 {
   get dna (): Uint8Array {
@@ -11,10 +12,10 @@ export class KittyIndex extends u32 {
 }
 
 export class KittyLinkedItem extends Struct {
-  constructor (value: any) {
-    super({
-      prev: ClassOf('Option<KittyIndex>' as any),
-      next: ClassOf('Option<KittyIndex>' as any)
+  constructor (registry: Registry, value: any) {
+    super(registry, {
+      prev: ClassOf(registry, 'Option<KittyIndex>' as any),
+      next: ClassOf(registry, 'Option<KittyIndex>' as any)
     }, value);
   }
 
@@ -27,7 +28,14 @@ export class KittyLinkedItem extends Struct {
   }
 }
 
-export class OwnedKittiesKey extends ClassOf('(AccountId, Option<KittyIndex>)' as any) {
+export class OwnedKittiesKey extends Tuple {
+  constructor (registry: Registry, value: any) {
+    super(registry, [
+      ClassOf(registry, 'AccountId'),
+      ClassOf(registry, 'Option<KittyIndex>' as any)
+    ], value);
+  }
+
   get account (): AccountId {
     return this[0] as AccountId;
   }

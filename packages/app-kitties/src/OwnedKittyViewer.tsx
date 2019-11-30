@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { withCalls } from '@polkadot/react-api/with';
 import { Option } from '@polkadot/types';
+import { registry } from '@polkadot/react-api';
 import { KittyLinkedItem, KittyIndex, OwnedKittiesKey } from './types';
 import KittyCard from './KittyCard';
 
@@ -19,16 +20,16 @@ const KittiesWrapper = styled.div`
 `;
 
 type LinkedKittyCardProps = {
-  accountKey: OwnedKittiesKey,
-  item?: Option<KittyLinkedItem>,
-  onNextOwnedKittiesKey: (key: OwnedKittiesKey) => void
+  accountKey: OwnedKittiesKey;
+  item?: Option<KittyLinkedItem>;
+  onNextOwnedKittiesKey: (key: OwnedKittiesKey) => void;
 };
 
 const LinkedKittyCardComp = ({ accountKey, item, onNextOwnedKittiesKey }: LinkedKittyCardProps) => {
   if (item && item.isSome) {
     const next = item.unwrap().next;
     if (next.isSome) {
-      const nextKey = new OwnedKittiesKey([accountKey.account, new Option(KittyIndex, next.unwrap())]);
+      const nextKey = new OwnedKittiesKey(registry, [accountKey.account, new Option(registry, KittyIndex, next.unwrap())]);
       setTimeout(() => onNextOwnedKittiesKey(nextKey));
     }
   }
@@ -43,11 +44,11 @@ const LinkedKittyCard = withCalls<LinkedKittyCardProps>(
 )(LinkedKittyCardComp);
 
 type Props = {
-  accountId?: string
+  accountId?: string;
 };
 
 type State = {
-  keys: OwnedKittiesKey[]
+  keys: OwnedKittiesKey[];
 };
 
 class OwnedKittyViewer extends React.PureComponent<Props, State> {
@@ -57,7 +58,7 @@ class OwnedKittyViewer extends React.PureComponent<Props, State> {
 
   addKey (i: number, key: OwnedKittiesKey) {
     const newKeys = [...this.state.keys];
-    let old = newKeys[i];
+    const old = newKeys[i];
     if (!key.eq(old)) {
       newKeys[i] = key;
       this.setState({
@@ -73,22 +74,22 @@ class OwnedKittyViewer extends React.PureComponent<Props, State> {
       return <span />;
     }
     return (
-        <div>
-          <h2>My kitties</h2>
-          <KittiesWrapper>
+      <div>
+        <h2>My kitties</h2>
+        <KittiesWrapper>
+          <LinkedKittyCard
+            accountKey={new OwnedKittiesKey(registry, [accountId, null])}
+            onNextOwnedKittiesKey={key => this.addKey(0, key)}
+          />
+          {keys.map((key, i) => (
             <LinkedKittyCard
-              accountKey={new OwnedKittiesKey([accountId, null])}
-              onNextOwnedKittiesKey={key => this.addKey(0, key)}
+              key={key.toString()}
+              accountKey={key}
+              onNextOwnedKittiesKey={key => this.addKey(i + 1, key)}
             />
-            {keys.map((key, i) => (
-              <LinkedKittyCard
-                key={key.toString()}
-                accountKey={key}
-                onNextOwnedKittiesKey={key => this.addKey(i + 1, key)}
-              />
-            ))}
-          </KittiesWrapper>
-        </div>
+          ))}
+        </KittiesWrapper>
+      </div>
     );
   }
 }

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { AddressMini, TxButton } from '@polkadot/react-components';
 import { u8aToHex, formatBalance } from '@polkadot/util';
 import { createType } from '@polkadot/types';
+import { registry } from '@polkadot/react-api';
 
 import KittyAvatar from './KittyAvatar';
 import withKitty, { Props as WithKittyProps } from './withKitty';
@@ -26,9 +27,9 @@ const Line = styled.div`
 `;
 
 type Props = WithKittyProps & {
-  showUnlist?: boolean,
-  showBuy?: boolean,
-  accountId?: string
+  showUnlist?: boolean;
+  showBuy?: boolean;
+  accountId?: string;
 };
 
 const Price = ({ kittyId, price, showUnlist, showBuy, accountId }: Props) => {
@@ -41,7 +42,7 @@ const Price = ({ kittyId, price, showUnlist, showBuy, accountId }: Props) => {
           <TxButton
             accountId={accountId}
             label='Unlist'
-            params={[kittyId, createType('Option<Balance>', null)]}
+            params={[kittyId, createType(registry, 'Option<Balance>', null)]}
             tx='kitties.ask'
           />
         }

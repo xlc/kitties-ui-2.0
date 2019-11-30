@@ -5,6 +5,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import BN from 'bn.js';
+import { registry } from '@polkadot/react-api';
 import { Button, TxButton, InputNumber, InputAddress, InputBalance } from '@polkadot/react-components';
 
 import { KittyIndex } from './types';
@@ -17,15 +18,15 @@ const ActionWrapper = styled.details`
 `;
 
 type Props = {
-  accountId?: string
+  accountId?: string;
 };
 type State = {
-  parentKittyId1?: KittyIndex,
-  parentKittyId2?: KittyIndex,
-  recipientId?: string,
-  transferKittyId?: KittyIndex,
-  sellKittyId?: KittyIndex,
-  sellKittyPrice?: BN
+  parentKittyId1?: KittyIndex;
+  parentKittyId2?: KittyIndex;
+  recipientId?: string;
+  transferKittyId?: KittyIndex;
+  sellKittyId?: KittyIndex;
+  sellKittyPrice?: BN;
 };
 
 export default class KittyActions extends React.PureComponent<Props> {
@@ -33,26 +34,26 @@ export default class KittyActions extends React.PureComponent<Props> {
 
   private onSetParentKittyId1 = (id?: BN) => {
     this.setState({
-      parentKittyId1: id && new KittyIndex(id)
+      parentKittyId1: id && new KittyIndex(registry, id)
     });
   }
 
   private onSetParentKittyId2 = (id?: BN) => {
     this.setState({
-      parentKittyId2: id && new KittyIndex(id)
+      parentKittyId2: id && new KittyIndex(registry, id)
     });
   }
 
-  private onSetRecipient = (recipientId?: string) => {
+  private onSetRecipient = (recipientId: string | null) => {
     this.setState({ recipientId });
   }
 
   private onSetTransferKittyId = (transferKittyId?: BN) => {
-    this.setState({ transferKittyId: transferKittyId && new KittyIndex(transferKittyId) });
+    this.setState({ transferKittyId: transferKittyId && new KittyIndex(registry, transferKittyId) });
   }
 
   private onSetSellKittyId = (sellKittyId?: BN) => {
-    this.setState({ sellKittyId: sellKittyId && new KittyIndex(sellKittyId) });
+    this.setState({ sellKittyId: sellKittyId && new KittyIndex(registry, sellKittyId) });
   }
 
   private onSetSellKittyPrice = (sellKittyPrice?: BN) => {

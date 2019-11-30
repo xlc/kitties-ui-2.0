@@ -103,7 +103,7 @@ const StyledImg = styled.img`
   position: absolute;
 `;
 
-const KittyAvatar = ({ dna, className }: { dna: ArrayLike<number>, className?: string }) => {
+const KittyAvatar = ({ dna, className }: { dna: ArrayLike<number>; className?: string }) => {
   const pick = (index: number, array: Array<string>) => {
     if (dna.length === 0) {
       return array[0];
